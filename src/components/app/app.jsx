@@ -44,7 +44,7 @@ function App() {
   return (
     <div className={styles.app}>
       <AppHeader />
-      <div className={`${styles.main} ${styles.columns}`}>
+      <main className={`${styles.main} ${styles.columns}`}>
         <section className={`${styles.column} ${styles.columns}`}>
           <div className={`${styles.article} ${styles.first__article}`}>
             <BurgerIngredients
@@ -59,7 +59,7 @@ function App() {
           order={order}
           setOrder={setOrder}
         />
-      </div>
+      </main>
     </div>
   );
 }

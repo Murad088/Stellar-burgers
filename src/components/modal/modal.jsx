@@ -5,10 +5,11 @@ import PropTypes from "prop-types";
 import { useEffect } from "react";
 
 const Modal = ({ children, onClose, title }) => {
-  const closeWhenPressEscape = (e) => {
-    if (e.code === "Escape") onClose();
-  };
+  
   useEffect(() => {
+    const closeWhenPressEscape = (e) => {
+      if (e.code === "Escape") onClose();
+    };
     document.addEventListener("keydown", closeWhenPressEscape);
     return () => {
       document.removeEventListener("keydown", closeWhenPressEscape);
