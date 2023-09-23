@@ -1,0 +1,13 @@
+.smallText {
+  font-size: 16px;
+}
+  
+.mediumText {
+  font-size: 30px;
+}
+  
+.doneIcon {
+  width: 120px;
+  height: 120px;
+  margin: 60px auto;
+}  
