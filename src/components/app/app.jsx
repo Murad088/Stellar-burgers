@@ -3,7 +3,7 @@ import styles from "./app.module.css";
 import { AppHeader } from "../app-header/app-header";
 import { BurgerIngredients } from "../burger-ingredients/burger-ingredients";
 import { BurgerConstructor } from "../burger-constructor/burger-constructor";
-import { checkResponse, getIngredients } from "../../utils/api";
+import { checkResponse, getIngredients, URL } from "../../utils/api";
 import { BurgerConstructorContext } from "../../utils/BurgerConstructorContext";
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
@@ -77,7 +77,7 @@ function App() {
       <BurgerConstructorContext.Provider
         value={{
           data: ingredients.data,
-          oredr: order,
+          order: order,
           setOrder: setOrder,
           toggleOrderModal,
           orderNum: state.orderNum,

@@ -13,7 +13,7 @@ export const Ingredient = ({ element, order, setOrder }) => {
   const [show, setShow] = useState(false);
   const orderType = element.type === "bun" ? "bun" : "ingredients";
   const qty = useMemo(() => {
-    if (orderType === "bun") {
+    if (orderType === "bun") { 
       if (order.bun?._id) {
         return order.bun._id === element._id ? 1 : 0;
       }
