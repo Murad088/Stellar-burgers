@@ -1,26 +1,45 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useReducer, useEffect, useMemo, } from "react";
 import styles from ".//burger-constructor.module.css";
-import {
-  ConstructorElement,
-  DragIcon,
-  CurrencyIcon,
-  Button,
-} from "@ya.praktikum/react-developer-burger-ui-components";
-import PropTypes from "prop-types";
-import { ingredientPropType } from "../../utils/prop-types";
-import Modal from "../modal/modal";
-import OrderDetails from "../order-details/order-details";
+import { ConstructorElement, DragIcon, CurrencyIcon, Button, } from "@ya.praktikum/react-developer-burger-ui-components";
+import { BurgerConstructorContext } from "../../utils/BurgerConstructorContext";
 
-export const BurgerConstructor = ({ order, setOrder, element }) => {
-  const [show, setShow] = useState(false);
-  const bunsPrice = order.bun?.price || 0;
-  const ingredientPrice = order.ingredients
-    .map((ingredient) => ingredient.price * ingredient.qty)
-    .reduce((prev, current) => {
-      return prev + current;
-    }, 0);
+export const BurgerConstructor = () => {
+  const { order, setOrder, toggleOrderModal } = useContext(
+    BurgerConstructorContext
+  );
 
-  const total = ingredientPrice + bunsPrice;
+  const initialState = {
+    count: 0,
+    ids: [],
+  };
+
+  function reducer(state, action) {
+    switch (action.type) {
+      case "change":
+        const ingredientPrice = order.ingredients
+          .map((ingredient) => ingredient.price * ingredient.qty)
+          .reduce((prev, current) => {
+            return prev + current;
+          }, 0);
+        const bunsPrice = order.bun?.price * 2 || 0;
+        const total = ingredientPrice + bunsPrice;
+        const IDs = [
+          order.bun?._id,
+          ...order.ingredients.map((item) => item._id),
+        ];
+        return { count: total, ids: IDs };
+      default:
+        return state;
+    }
+  }
+
+  const [state, dispatch] = useReducer(reducer, initialState);
+
+  useEffect(() => {
+    dispatch({ type: "change" });
+  }, [order]);
+
+  const total = state.count;
 
   const handleClose = (element) => {
     setOrder((prevOrder) => {
@@ -37,7 +56,7 @@ export const BurgerConstructor = ({ order, setOrder, element }) => {
           if (stateIngredient._id === element._id) {
             return {
               ...stateIngredient,
-              qty: stateIngredient.qty--,
+              qty: stateIngredient.qty - 1,
             };
           }
 
@@ -79,7 +98,7 @@ export const BurgerConstructor = ({ order, setOrder, element }) => {
                     <DragIcon type="primary" />
                     <div key={element.id} className="w-full">
                       <ConstructorElement
-                        text={element.name}
+                        text={`${element.name}`}
                         price={element.price}
                         thumbnail={element.image}
                         handleClose={() => {
@@ -117,21 +136,12 @@ export const BurgerConstructor = ({ order, setOrder, element }) => {
             type="primary"
             size="large"
             htmlType="button"
-            onClick={() => setShow(true)}
+            onClick={toggleOrderModal}
           >
             Оформить заказ
           </Button>
-          {show && (
-            <Modal title="" onClose={() => setShow(false)}>
-              <OrderDetails />
-            </Modal>
-          )}
         </div>
       </div>
     </div>
   );
-};
-
-BurgerConstructor.propTypes = {
-  data: PropTypes.arrayOf(ingredientPropType.isRequired).isRequired,
 };
