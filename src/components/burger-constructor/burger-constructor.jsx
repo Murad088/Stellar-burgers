@@ -7,7 +7,7 @@ import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
 import { addBurgerIngredient, moveIngredient } from "../../services/actions/BurgerConstructorAction";
 import { closeOrderDetailsModal, openOrderDetailsModal, postOrder } from "../../services/actions/OrderDetailsAction";
-import { BurgerIngredientMove } from "../burger-ingredients/burger-ingredient-move"
+import { BurgerIngredientMove } from "../burger-ingredients/burger-ingredient-move";
 
 export const BurgerConstructor = () => {
   const dispatch = useDispatch();
@@ -24,6 +24,7 @@ export const BurgerConstructor = () => {
       dispatch(addBurgerIngredient(item));
     },
   });
+
 
   const moveIngredientHandler = (dragIndex, hoverIndex) => {
     dispatch(moveIngredient(dragIndex, hoverIndex));
@@ -134,7 +135,7 @@ export const BurgerConstructor = () => {
             {total}
             <CurrencyIcon />
           </span>
-          <Button
+          <Button disabled={orderedIngredients.length <= 0 || !bun ? true : false}
             type="primary"
             size="large"
             htmlType="button"

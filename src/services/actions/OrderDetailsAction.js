@@ -12,9 +12,10 @@ export const POST_ORDER_SUCCESS = "POST_ORDER_SUCCESS";
 
 export const POST_ORDER_FAILED = "POST_ORDER_FAILED";
 
+
 export const getOrderRequest = () => ({type: POST_ORDER_REQUEST});
 
-export const getOrderSucces = (res) => ({
+export const getOrderSuccess = (res) => ({
   type: POST_ORDER_SUCCESS,
   order: res,
 });
@@ -30,7 +31,8 @@ export const postOrder = (array) => {
     fetchOrderData(array)
       .then(checkResponse)
       .then((res) => {
-        dispatch(getOrderSucces(res));
+        dispatch(getOrderSuccess(res));
+
       })
       .catch((err) => {
         dispatch(getOrderError(err.message));

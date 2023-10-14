@@ -4,10 +4,6 @@ import {
   GET_INGREDIENTS_SUCCESS,
 } from "../actions/IngredientAction";
 
-import {
-  CLOSE_INGREDIENT_DETAILS_MODAL,
-  OPEN_INGREDIENT_DETAILS_MODAL,
-} from "../actions/IngredientDetailsAction";
 
 const initialState = {
   showOrderModal: false,
@@ -43,21 +39,3 @@ export const IngredientsReducer = (state = initialState, action) => {
   }
 };
 
-export const IngredientDetailsReducer = (state = initialState, action) => {
-  switch (action.type) {
-    case OPEN_INGREDIENT_DETAILS_MODAL:
-      return {
-        ...state,
-        showOrderModal: true,
-        chosenIngredient: action.ingredient,
-      };
-    case CLOSE_INGREDIENT_DETAILS_MODAL:
-      return {
-        ...state,
-        showOrderModal: false,
-        chosenIngredient: null,
-      };
-    default:
-      return state;
-  }
-};

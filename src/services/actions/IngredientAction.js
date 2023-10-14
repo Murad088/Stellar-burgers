@@ -10,7 +10,7 @@ export const getIngredientsRequest = () => ({
   type: GET_INGREDIENTS_REQUEST,
 });
 
-export const getIngredientsSucces = (ingredients) => {
+export const getIngredientsSuccess = (ingredients) => {
   return {
     type: GET_INGREDIENTS_SUCCESS,
     payload: ingredients,
@@ -31,7 +31,7 @@ export const fetchIngredients = () => {
     fetch(`${URL}/ingredients`)
       .then(checkResponse)
       .then((res) => {
-        dispatch(getIngredientsSucces(res.data));
+        dispatch(getIngredientsSuccess(res.data));
       })
       .catch((err) => {
         dispatch(getIngredientsError(err.message));

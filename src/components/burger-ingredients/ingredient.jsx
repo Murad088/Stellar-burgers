@@ -21,7 +21,6 @@ export const Ingredient = ({ element, handleModal }) => {
       isDragging: monitor.isDragging(),
     }),
   });
-
   const opacity = isDragging ? 0.3 : 1;
 
   const bun = useSelector((state) => state.burger.bun);
@@ -32,8 +31,9 @@ export const Ingredient = ({ element, handleModal }) => {
   const qty = useMemo(() => {
     if (orderType === "bun") {
       if (bun?._id) {
-        return bun?._id === element._id ? 1 : 0;
+        return bun._id === element._id ? 1 : 0;
       }
+
       return 0;
     } else {
       return (
@@ -41,13 +41,13 @@ export const Ingredient = ({ element, handleModal }) => {
           (orderIngredient) => orderIngredient._id === element._id
         )?.length || 0
       );
-    };
+    }
   }, [ingredients, bun, orderType, element]);
 
   const onClick = () => {
     dispatch(addBurgerIngredient(element));
-  }
-  
+  };
+
   return (
     <div className={styles.ingredient} style={{ opacity }} ref={drag}>
       <div onClick={onClick} className={styles.counter}>
@@ -68,6 +68,7 @@ export const Ingredient = ({ element, handleModal }) => {
     </div>
   );
 };
+
 
 Ingredient.propTypes = {
   element: ingredientPropType.isRequired,
