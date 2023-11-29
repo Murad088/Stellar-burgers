@@ -1,3 +1,3 @@
-import { createContext } from "react";
+import React from "react";
 
-export const BurgerConstructorContext = createContext({});
+export const BurgerConstructorContext = React.createContext({});

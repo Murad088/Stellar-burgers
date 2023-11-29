@@ -1,102 +1,67 @@
-import { useState, useEffect } from "react";
 import styles from "./app.module.css";
+import React from "react";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
+import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
 import { AppHeader } from "../app-header/app-header";
 import { BurgerIngredients } from "../burger-ingredients/burger-ingredients";
 import { BurgerConstructor } from "../burger-constructor/burger-constructor";
-import { checkResponse, getIngredients, URL } from "../../utils/api";
-import { BurgerConstructorContext } from "../../utils/BurgerConstructorContext";
+import { fetchIngredients } from "../../services/actions/IngredientAction";
+import Menu from "../menu/menu";
+import { Registration } from "../../pages/registration";
+import { ResPassword } from "../../pages/res-password";
+import { ForgotPassword } from "../../pages/forgot-password";
+import { LoginPage } from "../../pages/login";
+import ProtectedRouteElement from "../protected-route-element/protected-route-element";
+import { ProfilePage } from "../../pages/profile-page";
+import { IngredientPage } from "../../pages/ingredient-single";
 import Modal from "../modal/modal";
-import OrderDetails from "../order-details/order-details";
+import IngredientDetails from "../ingredient-details/ingredient-details";
 
 function App() {
-  const [order, setOrder] = useState({
-    bun: undefined,
-    ingredients: [],
-  });
-
-  const [ingredients, setIngredients] = useState({
-    isLoading: true,
-    hasError: false,
-    data: [],
-  });
-
-  const [state, setState] = useState({
-    showOrderModal: false,
-    orderNum: null,
-  });
-
-  const toggleOrderModal = () => {
-    if (!state.showOrderModal) {
-      const Body = order.ingredients.map((item) => item._id);
-      fetch(`${URL}/orders`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ingredients: Body }),
-      })
-        .then(checkResponse)
-        .then((result) => {
-          setState({
-            ...state,
-            showOrderModal: !state.showOrderModal,
-            orderNum: result.order.number,
-          });
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    } else setState({ ...state, showOrderModal: !state.showOrderModal });
-  };
+  const location = useLocation();
+  const background = location.state && location.state.background;
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    setIngredients((prevState) => ({ ...prevState, isLoading: true }));
+    dispatch(fetchIngredients());
+  }, [dispatch]);
 
-    getIngredients()
-      .then((res) => {
-        setIngredients({
-          isLoading: false,
-          hasError: false,
-          data: res.data,
-        });
-      })
-      .catch((error) => {
-        setIngredients((prevState) => ({
-          ...prevState,
-          hasError: true,
-          isLoading: false,
-        }));
-      });
-  }, []);
+  const closeIngredientModal = () => {
+    navigate(-1);
+  };
 
-  if (ingredients.isLoading) return <p>Загрузка...</p>;
-  else if (ingredients.hasError)
-    return <p>Произошла ошибка, пожалуйста попробуйте снова</p>;
+  const navigate = useNavigate();
 
   return (
     <div className={styles.app}>
       <AppHeader />
-      <BurgerConstructorContext.Provider
-        value={{
-          data: ingredients.data,
-          order: order,
-          setOrder: setOrder,
-          toggleOrderModal,
-          orderNum: state.orderNum,
-        }}
-      >
-        <main className={`${styles.main} ${styles.columns}`}>
-          <section className={`${styles.column} ${styles.columns}`}>
-            <div className={`${styles.article} ${styles.first__article}`}>
-              <BurgerIngredients />
-            </div>
-          </section>
-          <BurgerConstructor />
-          {state.showOrderModal ? (
-            <Modal onClose={toggleOrderModal} title={""}>
-              <OrderDetails />
-            </Modal>
-          ) : null}
-        </main>
-      </ BurgerConstructorContext.Provider>
+      <Routes location={background || location}>
+        <Route path="/" element={<Menu />} />
+        <Route path="/reset-password" element={<ResPassword />} />
+        <Route path="/register" element={<Registration />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route
+          path="/profile"
+          element={<ProtectedRouteElement element={<ProfilePage />} />}
+        />
+        <Route path="/ingredients/:id" element={<IngredientPage />} />
+      </Routes>
+      {background && (
+        <Routes>
+          <Route
+            path="ingredients/:id"
+            element={
+              <Modal onClose={closeIngredientModal}>
+                <IngredientDetails />
+              </Modal>
+            }
+          />
+        </Routes>
+      )}
     </div>
   );
 }
