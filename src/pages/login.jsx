@@ -50,6 +50,16 @@ export const LoginPage = () => {
           onChange={onChange}
         />
       </div>
+      <div className="mb-6">
+        <Input
+          value={form.password || ""}
+          type={"password"}
+          placeholder={"Пароль"}
+          name={"password"}
+          icon="ShowIcon"
+          onChange={onChange}
+        />
+      </div>
       <Button htmlType='submit' type='primary' size='medium'>Войти</Button>
       <div className={`mt-20 ${styles.footer}`}>
         <p className='text text_type_main-default text_color_inactive'>Вы новый пользователь?</p>

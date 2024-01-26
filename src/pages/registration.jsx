@@ -3,7 +3,6 @@ import { Input, Button } from "@ya.praktikum/react-developer-burger-ui-component
 import { useState } from "react";
 import styles from "./styles.module.css";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../utils/auth";
 import { useDispatch } from "react-redux";
 import { registerRequest } from "../services/actions/AuthActions";
 
@@ -14,7 +13,6 @@ export const Registration = () => {
   const loginClick = () => {
     navigate("/login");
   };
-  let auth = useAuth();
   
   const [form, setValue] = useState(() => ({
     name: "",

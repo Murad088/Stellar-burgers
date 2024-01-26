@@ -1,5 +1,5 @@
 import React from 'react';
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import styles from "./burger-ingredients.module.css";
 import {
   Counter,
@@ -10,13 +10,12 @@ import { ingredientPropType } from "../../utils/prop-types";
 import { useDispatch, useSelector } from 'react-redux';
 import { addBurgerIngredient } from '../../services/actions/BurgerConstructorAction';
 import { useDrag } from 'react-dnd';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 
 export const Ingredient = ({ element, handleModal }) => {
   const dispatch = useDispatch();
   const location = useLocation();
-  const navigate = useNavigate();
   const background = location.state && location.state.background;
 
   const [{ isDragging }, drag] = useDrag({

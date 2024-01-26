@@ -1,4 +1,5 @@
 import { checkResponse, fetchOrderData } from "../../utils/api";
+
 export const SET_POPUP_ORDER = "SET_POPUP_ORDER";
 export const OPEN_ORDER_DETAILS_MODAL = "OPEN_ORDER_DETAILS_MODAL";
 export const CLOSE_ORDER_DETAILS_MODAL = "CLOSE_ORDER_DETAILS_MODAL";

@@ -2,14 +2,13 @@ import React from 'react';
 import styles from "./app-header.module.css";
 import { Logo, BurgerIcon, ListIcon, ProfileIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useAuth } from '../../utils/auth';
-import { NavLink, useLocation, useMatch} from 'react-router-dom';
+import { NavLink, useMatch} from 'react-router-dom';
 
 export const AppHeader = () => {
   const isMainPage = useMatch("/");
   const isOrderPage = useMatch("/orders");
   const isProfilePage = useMatch("/profile/*");
   const auth = useAuth();
-  const location = useLocation();
 
   return (
     <header>

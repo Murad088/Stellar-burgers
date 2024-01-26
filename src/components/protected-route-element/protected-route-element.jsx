@@ -1,25 +1,25 @@
-import { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
-import { userDataRequest } from "../../services/actions/AuthActions";
+import React from "react";
+import PropTypes from "prop-types";
+import { userDataRequest } from "../../utils/api";
+import { useSelector } from "react-redux";
+import { useLocation, Navigate } from "react-router-dom";
 
-export default function ProtectedRouteElement({ element }) {
-  const [isUserLoaded, setUserLoaded] = useState(false);
-  
-  const init = async () => {
-    await userDataRequest();
-    setUserLoaded(true);
-  };
+export default function ProtectedRouteElement({ element, anonymous = false }) {
+  const isLoggedIn = useSelector((store) => store.authReducer.user);
+  const location = useLocation();
 
-  useEffect(() => {
-    init();
-  }, []);
+  const from = location.state?.from || "/";
 
-  if (!isUserLoaded) {
-    return null;
+  if (anonymous && isLoggedIn) {
+    return <Navigate to={from} />;
+  }
+
+  if (!anonymous && !isLoggedIn) {
+    return <Navigate to="/login" state={{ from: location }} />;
   }
 
   return element;
-};
+}
 
 ProtectedRouteElement.propTypes = {
   element: PropTypes.element,

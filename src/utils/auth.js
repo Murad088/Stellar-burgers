@@ -1,6 +1,7 @@
 import React from 'react';
 import { useContext, useState, createContext } from "react";
 import { logoutRequest, passwordRecoveryRequest, passwordResetRequest, updateDataRequest } from "./api";
+import { checkResponse } from "./api";
 import { deleteCookie } from "./getCookie";
 
 const AuthContext = createContext(undefined);
@@ -19,7 +20,7 @@ export function useProvideAuth() {
 
   const passRecoveryRequest = async (form) => {
     const data = await passwordRecoveryRequest(form)
-      .then((res) => res.json())
+      .then(checkResponse)
       .then((data) => data);
     if (data.success) {
       setUser({ user });
@@ -28,7 +29,7 @@ export function useProvideAuth() {
 
   const passResetRequest = async (form) => {
     const data = await passwordResetRequest(form)
-      .then((res) => res.json())
+      .then(checkResponse)
       .then((data) => data);
     if (data.success) {
       setUser({ ...data.user, password: data.user.password });
@@ -42,7 +43,7 @@ export function useProvideAuth() {
   };
   const updateDataUserRequest = async (form) => {
     const data = await updateDataRequest(form)
-      .then((res) => res.json())
+      .then(checkResponse)
       .then((data) => data);
     if (data.success) {
       setUser({
@@ -61,4 +62,4 @@ export function useProvideAuth() {
     signOut,
     updateDataUserRequest,
   };
-}
+};

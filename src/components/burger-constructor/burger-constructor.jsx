@@ -8,7 +8,6 @@ import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
 import { useDrop } from 'react-dnd';
 import { BurgerIngredientMove } from '../burger-ingredients/burger-Ingredient-move';
-import { useAuth } from "../../utils/auth";
 import { useNavigate } from "react-router-dom";
 
 export const BurgerConstructor = () => {
@@ -65,7 +64,6 @@ export const BurgerConstructor = () => {
     [ingredients]
   );
   
-  const auth = useAuth();
 
   const authUser = useSelector((store) => store.authReducer.authUser);
 
