@@ -1,7 +1,7 @@
 import styles from "./app.module.css";
 import React from "react";
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
 import { AppHeader } from "../app-header/app-header";
 import { fetchIngredients } from "../../services/actions/IngredientAction";
@@ -20,12 +20,13 @@ import { checkUserAuth } from "../../services/actions/AuthActions";
 function App() {
   const location = useLocation();
   const background = location.state && location.state.background;
+
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchIngredients());
+    dispatch(fetchIngredients());    
     dispatch(checkUserAuth());
-  }, [dispatch]);
+  }, []);
 
   const closeIngredientModal = () => {
     navigate(-1);
@@ -40,9 +41,9 @@ function App() {
         <Route path="/" element={<Menu />} />
         <Route path="/reset-password" element={<ProtectedRouteElement element={<ResPassword />}/>} />
         <Route path="/register" element={<Registration/>} />
-        <Route path="/forgot-password" element={<ProtectedRouteElement element={<ForgotPassword/>}/>} />
-        <Route path="/login"  element={<LoginPage/>} />
-        <Route path="/profile" element={<ProtectedRouteElement element={<ProfilePage />} />} />
+        <Route path="/forgot-password" element={<ForgotPassword/>} />
+        <Route path="/login" element={<LoginPage/>} />
+        <Route path="/profile" element={<ProtectedRouteElement element={<ProfilePage />}/>} />
         <Route path="/ingredients/:id" element={<IngredientPage />} />
       </Routes>
       {background && (

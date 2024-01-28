@@ -65,13 +65,13 @@ export const BurgerConstructor = () => {
   );
   
 
-  const authUser = useSelector((store) => store.authReducer.authUser);
+  const authUser = useSelector((store) => store.authReducer.user);
 
   const navigate = useNavigate();
 
   function onClick() {
     if (!authUser) {
-      navigate("/login?redirect=/");
+      navigate("/login");
     } else {
       handleOpenModal();
     }

@@ -8,15 +8,13 @@ import { loginRequest } from '../services/actions/AuthActions';
 
 export const LoginPage = () => {
   const navigate = useNavigate();
-
-
-  const authUser = useSelector((store) => store.authReducer.authUser);
+  const authUser = useSelector((store) => store.authReducer.user);
 
   useEffect(() => {
     if (authUser) {
       navigate('/profile');
     }
-  }, [authUser, navigate]);
+  }, [authUser]);
 
   const registrButtonClick = () => {
     navigate('/register');

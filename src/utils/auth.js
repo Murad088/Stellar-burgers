@@ -71,4 +71,3 @@ export function useProvideAuth() {
     updateDataUserRequest,
   };
 };
-

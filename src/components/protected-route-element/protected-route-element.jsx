@@ -5,13 +5,10 @@ import { useLocation, Navigate } from "react-router-dom";
 
 
 export default function ProtectedRouteElement({ element, anonymous = false }) {
-  const isLoggedIn = useSelector((store) => store.authReducer.user);
   const user = useSelector((store) => store.authReducer.user);
   
   const location = useLocation();  
   const from = location.state || "/";
-  console.log(user);
-
 
   if (anonymous && user) {
     return <Navigate to={from}/>;
@@ -22,10 +19,8 @@ export default function ProtectedRouteElement({ element, anonymous = false }) {
   }
 
   if (location.pathname === "/reset-password" && location.state !== "/forgot-password") {
-    return <Navigate to="/login" state={{ from: location }} />;
+    return <Navigate to="/login" state={{from: location}}/>;
   }
-
-
   return element;
 }
 

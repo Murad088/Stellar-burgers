@@ -1,6 +1,6 @@
 import React from 'react';
 import { useEffect, useState } from "react";
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import styles from './styles.module.css';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { NavLink } from 'react-router-dom';
@@ -12,7 +12,16 @@ const styleInactive = `${styles.link} text text_type_main-medium text_color_inac
 
 export const ProfilePage = () => {
   const dispatch = useDispatch();
-  const location = useLocation();
+  const location = useLocation(); 
+  const navigate = useNavigate();
+  
+  const authUser = useSelector((store) => store.authReducer.user);
+
+  useEffect(() => {
+    if (!authUser) {
+      navigate('/login');
+    }
+  }, [navigate]);
 
   const [form, setValue] = useState({
     name: '',
