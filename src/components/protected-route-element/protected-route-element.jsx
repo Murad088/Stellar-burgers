@@ -12,9 +12,6 @@ export default function ProtectedRouteElement({ element, anonymous = false }) {
   const from = location.state || "/";
   console.log(user);
 
-  if (!isLoggedIn) {
-    return null;
-  }
 
   if (anonymous && user) {
     return <Navigate to={from}/>;
