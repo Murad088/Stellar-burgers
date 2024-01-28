@@ -34,6 +34,7 @@ export const ProfilePage = () => {
     dispatch(updateDataRequest(form));
   };
 
+
   const logoutClick = () => {
     dispatch(logoutRequest());
   };

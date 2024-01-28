@@ -15,6 +15,7 @@ import { ProfilePage } from "../../pages/profile-page";
 import { IngredientPage } from "../../pages/ingredient-single";
 import Modal from "../modal/modal";
 import IngredientDetails from "../ingredient-details/ingredient-details";
+import { checkUserAuth } from "../../services/actions/AuthActions";
 
 function App() {
   const location = useLocation();
@@ -23,6 +24,7 @@ function App() {
 
   useEffect(() => {
     dispatch(fetchIngredients());
+    dispatch(checkUserAuth());
   }, [dispatch]);
 
   const closeIngredientModal = () => {
@@ -36,10 +38,10 @@ function App() {
       <AppHeader />
       <Routes location={background || location}>
         <Route path="/" element={<Menu />} />
-        <Route path="/reset-password" element={<ResPassword />} />
-        <Route path="/register" element={<Registration />} />
-        <Route path="/forgot-password" element={<ForgotPassword />} />
-        <Route path="/login" element={<LoginPage />} />
+        <Route path="/reset-password" element={<ProtectedRouteElement element={<ResPassword />}/>} />
+        <Route path="/register" element={<Registration/>} />
+        <Route path="/forgot-password" element={<ProtectedRouteElement element={<ForgotPassword/>}/>} />
+        <Route path="/login"  element={<LoginPage/>} />
         <Route path="/profile" element={<ProtectedRouteElement element={<ProfilePage />} />} />
         <Route path="/ingredients/:id" element={<IngredientPage />} />
       </Routes>
@@ -48,7 +50,7 @@ function App() {
           <Route
             path="ingredients/:id"
             element={
-              <Modal onClose={closeIngredientModal}>
+              <Modal onClose={closeIngredientModal} title={"Детали ингредиента"}>
                 <IngredientDetails />
               </Modal>
             }

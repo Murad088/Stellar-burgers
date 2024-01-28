@@ -9,6 +9,7 @@ import { loginRequest } from '../services/actions/AuthActions';
 export const LoginPage = () => {
   const navigate = useNavigate();
 
+
   const authUser = useSelector((store) => store.authReducer.authUser);
 
   useEffect(() => {
@@ -33,7 +34,9 @@ export const LoginPage = () => {
     setValue({ ...form, [e.target.name]: e.target.value });
   };
 
+
   const onSubmit = (e) => {
+    navigate("/");
     e.preventDefault();
     dispatch(loginRequest(form));
   };

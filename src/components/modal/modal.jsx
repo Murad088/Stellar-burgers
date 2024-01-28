@@ -5,7 +5,7 @@ import ModalOverlay from "../modal-overlay/modal-overlay";
 import styles from "./modal.module.css";
 import PropTypes from "prop-types";
 
-const Modal = ({ children, onClose }) => {
+const Modal = ({ children, onClose, title }) => {
   
   useEffect(() => {
     const closeWhenPressEscape = (e) => {
@@ -23,7 +23,7 @@ const Modal = ({ children, onClose }) => {
       <div className={styles.container}>
         {children}
         <div className={`${styles.title}`}>
-          <p className={`text text_type_main-large`}>Детали ингредиента</p>
+          <p className={`text text_type_main-large`}>{title}</p>
           <CloseIcon onClick={onClose} type="primary" />
         </div>
       </div>

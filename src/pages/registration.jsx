@@ -8,11 +8,13 @@ import { registerRequest } from "../services/actions/AuthActions";
 
 export const Registration = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch = useDispatch(); 
+
   
   const loginClick = () => {
     navigate("/login");
   };
+  
   
   const [form, setValue] = useState(() => ({
     name: "",

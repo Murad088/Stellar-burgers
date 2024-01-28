@@ -6,6 +6,8 @@ const LOGIN_USER = "LOGIN_USER";
 const GET_USER = "GET_USER";
 const UPDATE_USER = "UPDATE_USER";
 const LOGOUT_USER = "LOGOUT_USER";
+export const SET_USER = 'SET_USER';
+export const SET_AUTH_CHECKED = 'SET_AUTH_CHECKED';
 
 export const passwordRecoveryRequest = (email) => {
   return async (dispatch) => {
@@ -128,6 +130,35 @@ export const logoutRequest = () => {
       dispatch({ type: LOGOUT_USER });
     } catch (err) {
       console.log(err);
+    }
+  };
+};
+
+export const checkUserAuth = () => {
+  return (dispatch) => {
+    if (localStorage.getItem("accessToken")) {
+      fetch(`${URL}/auth/user`, {
+        method: "GET",
+        headers: {
+          "content-type": "application/json",
+          authorization: localStorage.getItem("accessToken"),
+        }
+      })
+      .then(result => {        
+        return result.json().then(data => {
+          dispatch({ type: SET_USER, user: data.user });
+        });
+      })
+      .catch(() => {
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("refreshToken");
+        dispatch({type: SET_USER, user: null})
+      })
+      .finally(() => {
+        return dispatch({type: SET_AUTH_CHECKED, authUser: true})
+      });
+    } else {
+      dispatch({type: SET_AUTH_CHECKED, authUser: true});
     }
   };
 };

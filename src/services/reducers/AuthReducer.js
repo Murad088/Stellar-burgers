@@ -5,6 +5,8 @@ const LOGIN_USER = "LOGIN_USER";
 const GET_USER = "GET_USER";
 const UPDATE_USER = "UPDATE_USER";
 const LOGOUT_USER = "LOGOUT_USER";
+const SET_USER = 'SET_USER';
+const SET_AUTH_CHECKED = 'SET_AUTH_CHECKED';
 
 const initialState = {
   user: null,
@@ -55,6 +57,16 @@ export const authReducer = (state = initialState, action) => {
         ...state,
         passwordReset: false,
       };
+    case SET_AUTH_CHECKED:
+      return {
+        ...state,
+        authUser: true,
+      }
+    case SET_USER:
+      return {
+        ...state,
+        user: action.user,
+      }
     default:
       return state;
   }

@@ -71,7 +71,7 @@ export const BurgerConstructor = () => {
 
   function onClick() {
     if (!authUser) {
-      navigate("/login");
+      navigate("/login?redirect=/");
     } else {
       handleOpenModal();
     }
@@ -86,6 +86,7 @@ export const BurgerConstructor = () => {
 
   const handleCloseOrder = () => {
     dispatch(closeOrderDetailsModal());
+    navigate("/")
   };
 
   return (

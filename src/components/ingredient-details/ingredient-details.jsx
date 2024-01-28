@@ -4,9 +4,9 @@ import styles from "./ingredient-details.module.css";
 import { useParams } from 'react-router-dom';
 
 const IngredientDetails = () => {
-  //const popupIngredient = useSelector(
-  //  (state) => state.ingredientDetails.popupIngredient
-  //);
+  const popupIngredient = useSelector(
+    (state) => state.ingredientDetails.popupIngredient
+  );
 
   const ingredients = useSelector((state) => state.ingredients.data);
 

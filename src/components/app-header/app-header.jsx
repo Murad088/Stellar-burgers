@@ -2,7 +2,7 @@ import React from 'react';
 import styles from "./app-header.module.css";
 import { Logo, BurgerIcon, ListIcon, ProfileIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useAuth } from '../../utils/auth';
-import { NavLink, useMatch} from 'react-router-dom';
+import { NavLink, useMatch } from 'react-router-dom';
 
 export const AppHeader = () => {
   const isMainPage = useMatch("/");

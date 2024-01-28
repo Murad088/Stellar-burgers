@@ -4,6 +4,8 @@ import { logoutRequest, passwordRecoveryRequest, passwordResetRequest, updateDat
 import { checkResponse } from "./api";
 import { deleteCookie } from "./getCookie";
 
+
+
 const AuthContext = createContext(undefined);
 
 export function ProvideAuth({ children }) {
@@ -14,6 +16,8 @@ export function ProvideAuth({ children }) {
 export function useAuth() {
   return useContext(AuthContext);
 }
+
+
 
 export function useProvideAuth() {
   const [user, setUser] = useState(null);
@@ -35,12 +39,13 @@ export function useProvideAuth() {
       setUser({ ...data.user, password: data.user.password });
     }
   };
-  
+
   const signOut = async () => {
     await logoutRequest(user);
     setUser(null);
     deleteCookie("token");
   };
+
   const updateDataUserRequest = async (form) => {
     const data = await updateDataRequest(form)
       .then(checkResponse)
@@ -51,8 +56,11 @@ export function useProvideAuth() {
         email: data.user.email,
         password: data.user.password,
       });
-    }
+    }    
   };
+
+ 
+  
   return {
     user,
 
@@ -63,3 +71,4 @@ export function useProvideAuth() {
     updateDataUserRequest,
   };
 };
+
