@@ -1,21 +1,25 @@
-import { useMemo, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useDrag } from "react-dnd";
+import React from 'react';
+import { useMemo } from "react";
 import styles from "./burger-ingredients.module.css";
 import {
   Counter,
   CurrencyIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import IngredientDetails from "../ingredient-details/ingredient-details";
 import PropTypes from "prop-types";
 import { ingredientPropType } from "../../utils/prop-types";
-import { addBurgerIngredient } from "../../services/actions/BurgerConstructorAction";
+import { useDispatch, useSelector } from 'react-redux';
+import { addBurgerIngredient } from '../../services/actions/BurgerConstructorAction';
+import { useDrag } from 'react-dnd';
+import { useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 export const Ingredient = ({ element, handleModal }) => {
   const dispatch = useDispatch();
+  const location = useLocation();
+  const background = location.state && location.state.background;
 
   const [{ isDragging }, drag] = useDrag({
-    type: "ingredient",
+    type: 'ingredient',
     item: element,
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),
@@ -27,9 +31,9 @@ export const Ingredient = ({ element, handleModal }) => {
 
   const ingredients = useSelector((state) => state.burger.ingredients);
 
-  const orderType = element.type === "bun" ? "bun" : "ingredients";
+  const orderType = element.type === 'bun' ? 'bun' : 'ingredients';
   const qty = useMemo(() => {
-    if (orderType === "bun") {
+    if (orderType === 'bun') {
       if (bun?._id) {
         return bun._id === element._id ? 1 : 0;
       }
@@ -49,31 +53,26 @@ export const Ingredient = ({ element, handleModal }) => {
   };
 
   return (
-    <div className={styles.ingredient} style={{ opacity }} ref={drag}>
+    <Link
+      to={`/ingredients/${element._id}`}
+      state={{ background: location  }}
+      className={styles.ingredient}
+      style={{ opacity  }}
+      ref={drag}
+    >
       <div onClick={onClick} className={styles.counter}>
-        <Counter count={qty} size="default" />
+        <Counter count={qty} size='default' />
       </div>
-      <div onClick={() => handleModal(element)}>
-        <img
-          className="ml-4 mr-4 mb-1"
-          alt={element.name}
-          src={element.image}
-        />
-      </div>
+      <img className='ml-4 mr-4 mb-1' alt={element.name} src={element.image} />
       <div className={styles.price}>
-        <p className="text text_type_digits-default">{element.price}</p>
-        <CurrencyIcon type="primary" />
+        <p className='text text_type_digits-default'>{element.price}</p>
+        <CurrencyIcon type='primary' />
       </div>
       <p className={`text text_type_main-default`}>{element.name}</p>
-    </div>
+    </ Link>
   );
 };
 
-
-Ingredient.propTypes = {
-  element: ingredientPropType.isRequired,
-  order: PropTypes.shape({
-    bun: ingredientPropType,
-    ingredients: PropTypes.arrayOf(ingredientPropType).isRequired,
-  })
-};
+Ingredient.propTypes = PropTypes.arrayOf(
+  ingredientPropType.isRequired
+).isRequired;

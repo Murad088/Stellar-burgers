@@ -1,17 +1,17 @@
 import React, { useReducer, useEffect, useMemo, useCallback } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useDrop } from "react-dnd";
 import styles from ".//burger-constructor.module.css";
 import { ConstructorElement, DragIcon, CurrencyIcon, Button, } from "@ya.praktikum/react-developer-burger-ui-components";
+import { useDispatch, useSelector } from 'react-redux';
+import { addBurgerIngredient, moveIngredient } from '../../services/actions/BurgerConstructorAction';
+import { closeOrderDetailsModal, openOrderDetailsModal, postOrder } from '../../services/actions/OrderDetailsAction';
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
-import { addBurgerIngredient, moveIngredient } from "../../services/actions/BurgerConstructorAction";
-import { closeOrderDetailsModal, openOrderDetailsModal, postOrder } from "../../services/actions/OrderDetailsAction";
-import { BurgerIngredientMove } from "../burger-ingredients/burger-ingredient-move";
+import { useDrop } from 'react-dnd';
+import { BurgerIngredientMove } from '../burger-ingredients/burger-Ingredient-move';
+import { useNavigate } from "react-router-dom";
 
 export const BurgerConstructor = () => {
   const dispatch = useDispatch();
-
   const { isOrderPopupOpened } = useSelector((state) => state.orderDetails);
 
   const bun = useSelector((state) => state.burger.bun);
@@ -24,7 +24,6 @@ export const BurgerConstructor = () => {
       dispatch(addBurgerIngredient(item));
     },
   });
-
 
   const moveIngredientHandler = (dragIndex, hoverIndex) => {
     dispatch(moveIngredient(dragIndex, hoverIndex));
@@ -48,11 +47,10 @@ export const BurgerConstructor = () => {
         const IDs = [bun?._id, ...ingredients.map((item) => item._id)];
         return { count: total, ids: IDs };
       default:
-        return state;
+        return state; 
     }
   }
-
- 
+  
   const [state, dispatchState] = useReducer(reducer, initialState);
 
   useEffect(() => {
@@ -65,21 +63,32 @@ export const BurgerConstructor = () => {
     () => ingredients.map((m) => m._id),
     [ingredients]
   );
+  
+  
+  const authUser = useSelector((store) => store.authReducer.user);
 
+  const navigate = useNavigate();
+
+  function onClick() {
+    if (!authUser) {
+      navigate("/login");
+    } else {
+      handleOpenModal();
+    }
+  }
 
   const handleOpenModal = useCallback(() => {
     dispatch(openOrderDetailsModal());
     const allIngredients = [...orderedIngredients, bun._id];
 
-
     dispatch(postOrder(allIngredients));
   }, [dispatch, orderedIngredients, bun]);
 
-
   const handleCloseOrder = () => {
     dispatch(closeOrderDetailsModal());
-  }
-
+    navigate("/")
+  };
+  
   return (
     <div className={styles.column} ref={drop}>
       <div className={styles.container}>
@@ -139,7 +148,7 @@ export const BurgerConstructor = () => {
             type="primary"
             size="large"
             htmlType="button"
-            onClick={handleOpenModal}
+            onClick={onClick}
           >
             Оформить заказ
           </Button>

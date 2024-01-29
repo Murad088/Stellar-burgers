@@ -1,10 +1,4 @@
-import {
-  CLOSE_ORDER_DETAILS_MODAL,
-  OPEN_ORDER_DETAILS_MODAL,
-  POST_ORDER_FAILED,
-  POST_ORDER_REQUEST,
-  POST_ORDER_SUCCESS,
-} from "../actions/OrderDetailsAction";
+import { CLOSE_ORDER_DETAILS_MODAL, OPEN_ORDER_DETAILS_MODAL, POST_ORDER_FAILED, POST_ORDER_REQUEST, POST_ORDER_SUCCESS } from "../actions/OrderDetailsAction";
 
 const initialState = {
   orderNum: null,

@@ -1,27 +1,25 @@
-import React, { useMemo } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useInView } from "react-intersection-observer";
+import React from "react";
+import { useMemo } from 'react'
 import styles from "./burger-ingredients.module.css";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Ingredient } from "./ingredient";
-import { closeIngredientDetailsModal, deletePopupIngredient, openIngredientDetailsModal, setPopupIngredient } from "../../services/actions/IngredientDetailsAction";
-import Modal from "../modal/modal";
-import IngredientDetails from "../ingredient-details/ingredient-details";
+import { useDispatch, useSelector } from 'react-redux';
+import { useInView } from 'react-intersection-observer';
+import { closeIngredientDetailsModal, deletePopupIngredient, openIngredientDetailsModal, setPopupIngredient } from '../../services/actions/IngredientDetailsAction';
+
 
 export const BurgerIngredients = () => {
   const data = useSelector((state) => {
     return state.ingredients.data;
   });
-
-  const [curent, setCurrent] = React.useState("buns");
-
+  const [current, setCurrent] = React.useState('buns');
   const { isPopupIngredientOpened } = useSelector(
     (state) => state.ingredientDetails
   );
   const dispatch = useDispatch();
 
   const buns = useMemo(() => {
-    return data.filter((item) => item.type === "bun");
+    return data.filter((item) => item.type === 'bun');
   }, [data]);
 
   const handleOpenModalIngredient = (element) => {
@@ -33,7 +31,7 @@ export const BurgerIngredients = () => {
     dispatch(closeIngredientDetailsModal());
     dispatch(deletePopupIngredient());
   };
-
+  
   const sauces = useMemo(
     () => data.filter((item) => item.type === "sauce"),
     [data]
@@ -54,7 +52,6 @@ export const BurgerIngredients = () => {
   const [bunRef, bunInView] = useInView();
   const [sauceRef, sauceInView] = useInView();
   const [mainRef, mainInView] = useInView();
-
 
   return (
     data && (
@@ -100,11 +97,7 @@ export const BurgerIngredients = () => {
           </p>
           <div className={styles.buns} ref={bunRef}>
             {buns.map((element) => (
-              <Ingredient
-                key={element._id}
-                element={element}
-                handleModal={handleOpenModalIngredient}
-              />
+              <Ingredient key={element._id} element={element} />
             ))}
           </div>
           <p
@@ -115,11 +108,7 @@ export const BurgerIngredients = () => {
           </p>
           <div className={styles.sauces} ref={sauceRef}>
             {sauces.map((element) => (
-              <Ingredient
-                key={element._id}
-                element={element}
-                handleModal={handleOpenModalIngredient}
-              />
+              <Ingredient key={element._id} element={element} />
             ))}
           </div>
           <p
@@ -130,10 +119,7 @@ export const BurgerIngredients = () => {
           </p>
           <div className={styles.mains} ref={mainRef}>
             {main.map((element) => (
-              <Ingredient
-                key={element._id}
-                element={element}
-                handleModal={handleOpenModalIngredient}
+              <Ingredient key={element._id} element={element}
               />
             ))}
           </div>

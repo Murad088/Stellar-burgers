@@ -1,9 +1,5 @@
 import update from "immutability-helper";
-import {
-  ADD_BURGER_INGREDIENT,
-  MOVE_INGREDIENT,
-  REMOVE_BURGER_INGREDIENT,
-} from "../actions/BurgerConstructorAction";
+import { ADD_BURGER_INGREDIENT, MOVE_INGREDIENT, REMOVE_BURGER_INGREDIENT } from "../actions/BurgerConstructorAction";
 
 const initialState = {
   bun: undefined,
@@ -23,7 +19,7 @@ export const BurgerConstructorReducer = (state = initialState, action) => {
     }
     case REMOVE_BURGER_INGREDIENT: {
       const newIngredients = state.ingredients.filter(
-        (item) => item.key !== action.key   
+        (item) => item.key !== action.key
       );
 
       return {

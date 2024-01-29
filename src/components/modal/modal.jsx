@@ -1,3 +1,4 @@
+import React from 'react';
 import { useEffect } from "react";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import ModalOverlay from "../modal-overlay/modal-overlay";
@@ -14,7 +15,7 @@ const Modal = ({ children, onClose, title }) => {
     return () => {
       document.removeEventListener("keydown", closeWhenPressEscape);
     };
-  }, []);
+  }, [onClose]);
 
   return (
     <>
@@ -34,5 +35,4 @@ export default Modal;
 
 Modal.propTypes = {
   onClose: PropTypes.func.isRequired,
-  title: PropTypes.string.isRequired,
 };

@@ -1,36 +1,41 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
+
 import App from "./components/app/app";
 import reportWebVitals from "./reportWebVitals";
-
 import { applyMiddleware, compose, createStore } from "redux";
 import { RootReducer } from "./services/reducers/RootReducer";
 import { composeWithDevTools } from "redux-devtools-extension";
 
 import thunk from "redux-thunk";
 import { Provider } from "react-redux";
+import { ProvideAuth } from "./utils/auth";
+import { BrowserRouter } from "react-router-dom";
 
-const composeEnhancers = 
+const composeEnhancers =
   typeof window === "object" && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
     ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({})
     : compose;
-    
-  const enhancer = composeEnhancers(applyMiddleware(thunk));
 
-  const store = createStore(RootReducer, enhancer);
-   
-  const state = store.getState((state) => {
-    return state;
-  });
+const enhancer = composeEnhancers(applyMiddleware(thunk));
 
+const store = createStore(RootReducer, enhancer);
 
-  ReactDOM.render(
-    <React.StrictMode>
-      <Provider store={store}>
-        <App />
-      </Provider>
-    </React.StrictMode>,
+const state = store.getState((state) => {
+  return state;
+});
+
+ReactDOM.render(
+  <React.StrictMode>
+    <Provider store={store}>
+      <ProvideAuth>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </ProvideAuth>
+    </Provider>
+  </React.StrictMode>,
   document.getElementById("root")
 );
 

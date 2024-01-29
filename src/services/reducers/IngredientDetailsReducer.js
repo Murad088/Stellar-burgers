@@ -1,10 +1,5 @@
-import {
-  SET_POPUP_INGREDIENT,
-  DELETE_POPUP_INGREDIENT,
-  OPEN_INGREDIENT_DETAILS_MODAL,
-  CLOSE_INGREDIENT_DETAILS_MODAL,
-} from "../actions/IngredientDetailsAction";
-
+import { SET_POPUP_INGREDIENT, DELETE_POPUP_INGREDIENT, OPEN_INGREDIENT_DETAILS_MODAL, CLOSE_INGREDIENT_DETAILS_MODAL } from "../actions/IngredientDetailsAction";
+  
 const initialState = {
   popupIngredient: null,
   isPopupIngredientOpened: false,
