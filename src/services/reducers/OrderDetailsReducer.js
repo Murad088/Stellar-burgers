@@ -6,7 +6,7 @@ const initialState = {
   orderFailed: false,
   isOrderPopupOpened: false,
 };
-  
+
 export const orderDetailsReducer = (state = initialState, action) => {
   switch (action.type) {
     case POST_ORDER_REQUEST: {

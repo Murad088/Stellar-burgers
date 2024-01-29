@@ -5,6 +5,7 @@ import { orderDetailsReducer } from "./OrderDetailsReducer";
 import { ingredientDetailsReducer } from "./IngredientDetailsReducer";
 import { authReducer } from "./AuthReducer";
 
+
 export const RootReducer = combineReducers({
   ingredients: IngredientsReducer,
   ingredientDetails: ingredientDetailsReducer,
