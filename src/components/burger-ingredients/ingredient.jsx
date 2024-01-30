@@ -16,7 +16,7 @@ import { Link } from 'react-router-dom';
 export const Ingredient = ({ element, handleModal }) => {
   const dispatch = useDispatch();
   const location = useLocation();
-  const background = location.state && location.state.background;
+//  const background = location.state && location.state.background;
 
   const [{ isDragging }, drag] = useDrag({
     type: 'ingredient',
@@ -43,7 +43,7 @@ export const Ingredient = ({ element, handleModal }) => {
       return (
         ingredients.filter(
           (orderIngredient) => orderIngredient._id === element._id
-        )?.length || 0
+        ).length || 0
       );
     }
   }, [ingredients, bun, orderType, element]);

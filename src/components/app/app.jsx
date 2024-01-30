@@ -1,7 +1,7 @@
 import styles from "./app.module.css";
 import React from "react";
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
 import { AppHeader } from "../app-header/app-header";
 import { fetchIngredients } from "../../services/actions/IngredientAction";
@@ -15,7 +15,13 @@ import { ProfilePage } from "../../pages/profile-page";
 import { IngredientPage } from "../../pages/ingredient-single";
 import Modal from "../modal/modal";
 import IngredientDetails from "../ingredient-details/ingredient-details";
+import { OrderPage } from "../../pages/order-page";
+import { Feed } from "../../pages/feed";
+import { FeedInfo } from "../../pages/feed-Info";
+import { ProfileUser } from "../../pages/profile-user";
+import { OrderInfo } from "../../pages/order-Info";
 import { checkUserAuth } from "../../services/actions/AuthActions";
+
 
 function App() {
   const location = useLocation();
@@ -24,9 +30,12 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    const token = localStorage.getItem("accessToken");
+    if (token) {
+      dispatch(checkUserAuth());
+    }
     dispatch(fetchIngredients());    
-    dispatch(checkUserAuth());
-  }, []);
+  }, [dispatch]);
 
   const closeIngredientModal = () => {
     navigate(-1);
@@ -39,20 +48,53 @@ function App() {
       <AppHeader />
       <Routes location={background || location}>
         <Route path="/" element={<Menu />} />
-        <Route path="/reset-password" element={<ProtectedRouteElement element={<ResPassword />}/>} />
-        <Route path="/register" element={<Registration/>} />
-        <Route path="/forgot-password" element={<ForgotPassword/>} />
-        <Route path="/login" element={<LoginPage/>} />
-        <Route path="/profile" element={<ProtectedRouteElement element={<ProfilePage />}/>} />
+        <Route path="/reset-password" element={<ResPassword />} />
+        <Route path="/register" element={<Registration />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route
+          path="/profile"
+          element={<ProtectedRouteElement element={<ProfilePage />} />}
+        >
+          <Route path="/profile" element={<ProfileUser />} />
+          <Route path="/profile/orders" element={<OrderPage />} />
+        </Route>
         <Route path="/ingredients/:id" element={<IngredientPage />} />
+
+        <Route path="/feed" element={<Feed />} />
+        <Route path="/feed/:number" element={<FeedInfo />} />
+
+        <Route
+          path="/profile/orders/:number"
+          element={<ProtectedRouteElement element={<OrderInfo />} />}
+        />
       </Routes>
       {background && (
         <Routes>
           <Route
             path="ingredients/:id"
             element={
-              <Modal onClose={closeIngredientModal} title={"Детали ингредиента"}>
+              <Modal
+                onClose={closeIngredientModal}
+                title={"Детали ингредиента"}
+              >
                 <IngredientDetails />
+              </Modal>
+            }
+          />
+          <Route
+            path="feed/:number"
+            element={
+              <Modal onClose={closeIngredientModal}>
+                <FeedInfo />
+              </Modal>
+            }
+          />
+          <Route
+            path="profile/orders/:number"
+            element={
+              <Modal onClose={closeIngredientModal}>
+                {<ProtectedRouteElement element={<OrderInfo />} />}
               </Modal>
             }
           />

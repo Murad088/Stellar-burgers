@@ -4,36 +4,35 @@ import "./index.css";
 
 import App from "./components/app/app";
 import reportWebVitals from "./reportWebVitals";
-import { applyMiddleware, compose, createStore } from "redux";
+import { applyMiddleware, createStore } from "redux";
 import { RootReducer } from "./services/reducers/RootReducer";
 import { composeWithDevTools } from "redux-devtools-extension";
 
 import thunk from "redux-thunk";
 import { Provider } from "react-redux";
-import { ProvideAuth } from "./utils/auth";
 import { BrowserRouter } from "react-router-dom";
 
-const composeEnhancers =
-  typeof window === "object" && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
-    ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({})
-    : compose;
+import { wsActions, wsProfileActions } from "./services/actions/WebsocketActions";
+import { socketMiddleware } from "./services/middleware/SocketMiddleware";
 
-const enhancer = composeEnhancers(applyMiddleware(thunk));
-
-const store = createStore(RootReducer, enhancer);
-
-const state = store.getState((state) => {
-  return state;
-});
+const wsUrl = "wss://norma.nomoreparties.space/orders";
+const store = createStore(
+  RootReducer,
+  composeWithDevTools(
+    applyMiddleware(
+      thunk, 
+      socketMiddleware(wsUrl, wsActions),
+      socketMiddleware(wsUrl, wsProfileActions)
+    )
+  )
+);
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <ProvideAuth>
-        <BrowserRouter>
-          <App />
-        </BrowserRouter>
-      </ProvideAuth>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
     </Provider>
   </React.StrictMode>,
   document.getElementById("root")

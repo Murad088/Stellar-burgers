@@ -1,20 +1,30 @@
 import React from 'react';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import styles from './styles.module.css';
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
 import { loginRequest } from '../services/actions/AuthActions';
 
 export const LoginPage = () => {
   const navigate = useNavigate();
+  
+  const { search } = useLocation();
+
+  const query = useMemo(() => new URLSearchParams(search), [search]);
+
+  const redirectPath = query.get("redirect");
+
   const authUser = useSelector((store) => store.authReducer.user);
 
   useEffect(() => {
     if (authUser) {
+      if (redirectPath) {
+        return navigate(redirectPath);
+      }
       navigate('/profile');
     }
-  }, [authUser]);
+  }, [authUser, navigate, redirectPath]);
 
   const registrButtonClick = () => {
     navigate('/register');
@@ -31,7 +41,6 @@ export const LoginPage = () => {
   const onChange = (e) => {
     setValue({ ...form, [e.target.name]: e.target.value });
   };
-
 
   const onSubmit = (e) => {
     navigate("/");

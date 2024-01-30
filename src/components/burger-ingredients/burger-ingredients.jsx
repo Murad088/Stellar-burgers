@@ -1,5 +1,5 @@
 import React from "react";
-import { useMemo } from 'react'
+import { useMemo, useState } from 'react'
 import styles from "./burger-ingredients.module.css";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Ingredient } from "./ingredient";
@@ -12,7 +12,7 @@ export const BurgerIngredients = () => {
   const data = useSelector((state) => {
     return state.ingredients.data;
   });
-  const [current, setCurrent] = React.useState('buns');
+  const [current, setCurrent] = useState('buns');
   const { isPopupIngredientOpened } = useSelector(
     (state) => state.ingredientDetails
   );
@@ -22,7 +22,7 @@ export const BurgerIngredients = () => {
     return data.filter((item) => item.type === 'bun');
   }, [data]);
 
-  const handleOpenModalIngredient = (element) => {
+ const handleOpenModalIngredient = (element) => {
     dispatch(openIngredientDetailsModal());
     dispatch(setPopupIngredient(element));
   };
