@@ -137,7 +137,7 @@ export const logoutRequest = () => {
 export const checkUserAuth = () => {
   return (dispatch) => {
     if (localStorage.getItem("accessToken")) {
-      fetch(`/auth/user`, {
+      fetch(`${URL}/auth/user`, {
         method: "GET",
         headers: {
           "content-type": "application/json",

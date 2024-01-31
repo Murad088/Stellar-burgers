@@ -26,7 +26,12 @@ export const socketMiddleware = (Url, Actions) => {
         };
 
         socket.onclose = (event) => {
-          dispatch({ type: onClose, payload: event });
+          if (event.wasClean) {
+            dispatch({ type: onClose, payload: event });
+          } else {
+            console.log(event.wasClean);
+          }
+          socket.close()
         };
       }
 

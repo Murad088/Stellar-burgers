@@ -13,11 +13,10 @@ export const Feed = () => {
       dispatch({ type: WS_CONNECTION_CLOSED });
     };
   }, [dispatch]);
-  const { orders, total, totalToday } = useSelector((store) => ({
-    orders: store.wsReducer.orders,
-    total: store.wsReducer.total,
-    totalToday: store.wsReducer.totalToday,
-  }));
+  
+  const orders = useSelector(store => store.wsReducer.orders);
+  const total = useSelector(store => store.wsReducer.total);
+  const totalToday = useSelector(store => store.wsReducer.totalToday);
 
   return (
     <main className={styles.wrapper}>
