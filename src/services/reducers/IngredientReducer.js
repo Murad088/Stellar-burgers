@@ -8,7 +8,7 @@ const initialState = {
   data: [],
   error: null,
 };
-  
+
 export const IngredientsReducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_INGREDIENTS_REQUEST:
@@ -16,7 +16,7 @@ export const IngredientsReducer = (state = initialState, action) => {
         ...state,
         loading: true,
       };
-
+      
     case GET_INGREDIENTS_SUCCESS:
       return {
         ...state,
@@ -24,7 +24,7 @@ export const IngredientsReducer = (state = initialState, action) => {
         loading: false,
         error: null,
       };
-  
+      
     case GET_INGREDIENTS_ERROR:
       return {
         ...state,

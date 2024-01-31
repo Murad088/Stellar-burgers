@@ -47,7 +47,8 @@ export const BurgerIngredients = () => {
   const setTab = (tab) => {
     setCurrent(tab);
     const element = document.getElementById(tab);
-    if (element) element.scrollIntoView({ behavior: "smooth" });
+    
+    if (element) element.scrollIntoView({ behavior: "smooth"});
   };
 
   const [bunRef, bunInView] = useInView();
@@ -125,6 +126,16 @@ export const BurgerIngredients = () => {
             ))}
           </div>
         </div>
+        {isPopupIngredientOpened && (
+          <Modal
+            title="Детали ингредиента"
+            onClose={() => {
+              handleCloseModalIngredient();
+            }}
+          >
+            <IngredientDetails />
+          </Modal>
+        )}
       </>
     )
   );

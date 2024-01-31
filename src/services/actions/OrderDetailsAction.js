@@ -63,3 +63,4 @@ export const closeOrderDetailsModal = () => {
     type: CLOSE_ORDER_DETAILS_MODAL,
   };
 };
+
