@@ -76,14 +76,3 @@ export const Ingredient = ({ element, handleModal }) => {
 Ingredient.propTypes = PropTypes.arrayOf(
   ingredientPropType.isRequired
 ).isRequired;
-
-/*
-Ingredient.propTypes = {
-  element: ingredientPropType.isRequired,
-  order: PropTypes.shape({
-    bun: ingredientPropType,
-    ingredients: PropTypes.arrayOf(ingredientPropType).isRequired,
-  }),
-  setOrder: PropTypes.func.isRequired
-};
-*/

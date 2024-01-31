@@ -5,7 +5,7 @@ import doneIcon from "../../images/done.png";
 
 const OrderDetails = () => {
   const { orderNum } = useSelector((state) => state.orderDetails);
-
+  
   return (
     <div>
       <p className="mt-30 text text_type_digits-large">{orderNum.order.number || ''}</p>

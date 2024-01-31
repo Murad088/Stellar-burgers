@@ -36,7 +36,7 @@ export const BurgerConstructor = () => {
 
   function reducer(state, action) {
     switch (action.type) {
-      case "change":
+      case "change": 
         const ingredientPrice = ingredients
           .map((ingredient) => ingredient.price)
           .reduce((prev, current) => {
@@ -50,7 +50,7 @@ export const BurgerConstructor = () => {
         return state; 
     }
   }
-
+  
   const [state, dispatchState] = useReducer(reducer, initialState);
 
   useEffect(() => {
@@ -64,7 +64,7 @@ export const BurgerConstructor = () => {
     [ingredients]
   );
   
-
+  
   const authUser = useSelector((store) => store.authReducer.user);
 
   const navigate = useNavigate();
@@ -88,7 +88,7 @@ export const BurgerConstructor = () => {
     dispatch(closeOrderDetailsModal());
     navigate("/")
   };
-
+  
   return (
     <div className={styles.column} ref={drop}>
       <div className={styles.container}>
@@ -144,7 +144,7 @@ export const BurgerConstructor = () => {
             {total}
             <CurrencyIcon />
           </span>
-          <Button
+          <Button disabled={orderedIngredients.length <= 0 || !bun ? true : false}
             type="primary"
             size="large"
             htmlType="button"
