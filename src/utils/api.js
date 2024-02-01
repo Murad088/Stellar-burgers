@@ -8,6 +8,7 @@ export const WS_PROFILE_URL = "wss://norma.nomoreparties.space/orders";
 export function getIngredients() {
   return fetch(`${URL}/ingredients`).then(checkResponse);
 }
+
 export const request = (path, options) => {
   return fetch(`${URL}${path}`, options).then(checkResponse);
 };
@@ -57,6 +58,7 @@ export const fetchOrderData = (ingredients) => {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      Authorization: localStorage.getItem("accessToken"),
     },
     body: JSON.stringify({
       ingredients,

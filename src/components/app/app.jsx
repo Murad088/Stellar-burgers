@@ -65,7 +65,7 @@ function App() {
         <Route path="/feed/:number" element={<FeedInfo />} />
 
         <Route
-          path="/profile/orders/:number"
+          path="/profile/orders/:number" 
           element={<ProtectedRouteElement element={<OrderInfo />} />}
         />
       </Routes>

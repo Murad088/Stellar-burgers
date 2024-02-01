@@ -26,7 +26,7 @@ export const AppHeader = () => {
             Конструктор
           </p>
         </NavLink>
-        <NavLink to="/feed" target="_blank" className={`${styles.constructor}`}>
+        <NavLink to="/feed" className={`${styles.constructor}`}>
           <div className={"ml-5 mr-2 mt-4 mb-4"}>
             <ListIcon type={isOrderPage ? "primary" : "secondary"} />
           </div>

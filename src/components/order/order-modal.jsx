@@ -21,10 +21,8 @@ export function OrderModal() {
   }));
 
   useEffect(() => {
-    if (!orders.length) {
-      dispatch(getOrderByNumber(number));
-    }
-  }, [dispatch, number, orders.length]);
+    dispatch(getOrderByNumber(number));
+  }, []);
 
   const selectedOrders = location.pathname.includes("/profile/orders")
     ? userOrders
@@ -34,7 +32,7 @@ export function OrderModal() {
     selectedOrders &&
     selectedOrders.find((element) => element.number === parseInt(number));
 
-  order.ingredients.forEach((order) => {
+  const orderIngrs = order?.ingredients.forEach((order) => {
     const newIngredient = ingredients.find(
       (ingredient) => ingredient._id === order
     );

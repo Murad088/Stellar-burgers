@@ -4,13 +4,12 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { WS_GET_PROFILE_ORDERS, WS_PROFILE_CONNECTION_CLOSED, WS_PROFILE_CONNECTION_START, } from "../services/actions/WebsocketActions";
 import { OrderCard } from "../components/order/order-card"; 
+import { wsReducer } from "../services/reducers/WebsocketReducer";
 
 export const OrderPage = () => {
   const dispatch = useDispatch();
 
-  const { usersOrders } = useSelector((store) => ({
-    usersOrders: store.wsReducer.userOrders,
-  }));
+  const usersOrders = useSelector(store => store.wsReducer.userOrders);
 
   const token = localStorage.getItem("accessToken")?.split(" ")?.[1];
 
@@ -28,11 +27,16 @@ export const OrderPage = () => {
     };
   }, [dispatch, token]);
 
-  const reverseOrders = usersOrders?.reverse();
+  window.addEventListener('beforeunload', () => {
+    dispatch({ type: WS_PROFILE_CONNECTION_CLOSED });
+   });
+  
+
+  const reversed = usersOrders?.reverse();
   return (
     <div>
       <section className={styles.OrdersSection}>
-        {reverseOrders?.map((order) => (
+        {reversed?.map((order) => (
           <OrderCard key={order._id} order={order} />
         ))}
       </section>

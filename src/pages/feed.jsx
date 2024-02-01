@@ -7,12 +7,18 @@ import { OrderCard } from "../components/order/order-card";
 
 export const Feed = () => {
   const dispatch = useDispatch();
+  const token = localStorage.getItem("accessToken")?.split(" ")?.[1];
+
   useEffect(() => {
     dispatch({ type: WS_CONNECTION_START, payload: `/all` });
     return () => {
       dispatch({ type: WS_CONNECTION_CLOSED });
     };
-  }, [dispatch]);
+  }, [dispatch, token]);
+
+  window.addEventListener('beforeunload', () => {
+    dispatch({ type: WS_CONNECTION_CLOSED });
+   });
   
   const orders = useSelector(store => store.wsReducer.orders);
   const total = useSelector(store => store.wsReducer.total);
@@ -23,7 +29,7 @@ export const Feed = () => {
       <h2 className={"text text_type_main-large pt-10 pb-5"}>Лента Заказов</h2>
       <div className={styles.mainFeed}>
         <section className={styles.OrdersSection}>
-          {orders.map((order) => (
+          {orders?.map((order) => (
             <OrderCard key={order._id} order={order} />
           ))}
         </section>

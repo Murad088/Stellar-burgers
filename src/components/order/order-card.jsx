@@ -14,6 +14,7 @@ export const OrderCard = ({ order }) => {
   const ingredients = useSelector((state) => {
     return state.ingredients.data;
   });
+  
 
   useEffect(() => {
     if (order && order.ingredients) {
@@ -41,11 +42,11 @@ export const OrderCard = ({ order }) => {
 
   const openOrderModal = () => {
     if (location.pathname.indexOf("feed") === -1) {
-      navigate(`/profile/orders/${order.number}`, {
+      window.open(`/profile/orders/${order.number}`, {
         state: { background: location },
       });
     } else {
-      navigate(`/feed/${order.number}`, { state: { background: location } });
+      window.open(`/feed/${order.number}`, { state: { background: location } });
     }
   };
 
