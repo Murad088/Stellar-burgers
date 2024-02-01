@@ -11,12 +11,10 @@
   gap: 16px;
   max-width: 600px;
 }
-  
 .iconContainer {
   width: 24px;
   height: 24px;
 }
- 
 .listItem {
   flex-grow: 0;
   flex-shrink: 0;
@@ -26,19 +24,17 @@
   justify-content: center;
   padding: 8px 0;
 }
-  
 .bun {
   padding-left: 32px;
 }
-  
+
 .listItem:last-child {
   padding-bottom: 0;
 }
-  
+
 .listItem:first-child {
   padding-top: 0;
 }
-  
 .scrolling {
   margin-right: 0;
   width: 100%;
@@ -50,39 +46,35 @@
   overflow-x: hidden;
   max-height: 464px;
 }
-  
 .scrolling::-webkit-scrollbar {
   width: 8px;
 }
-  
 .scrolling::-webkit-scrollbar-track {
   background: #2f2f37;
 }
-  
 .scrolling::-webkit-scrollbar-thumb {
   background: #8585ad;
 }
-
 .column {
   display: flex;
   flex-direction: column;
+
   width: 100%;
 }
-
 .currency {
   display: flex;
   align-self: flex-end;
   align-items: center;
+
   padding-right: 16px;
 }
- 
+
 .order_button {
   display: flex;
   justify-content: center;
   gap: 40px;
   margin-top: 40px;
 }
-  
 .currencyText {
   display: flex;
   align-items: center;

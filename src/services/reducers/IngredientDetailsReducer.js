@@ -5,7 +5,7 @@ const initialState = {
   isPopupIngredientOpened: false,
 };
 
-export const ingredientDetailsReducer = (state = initialState, action) => {
+export const IngredientDetailsReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_POPUP_INGREDIENT: {
       return {

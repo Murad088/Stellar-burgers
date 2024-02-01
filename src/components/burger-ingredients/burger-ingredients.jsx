@@ -1,18 +1,20 @@
 import React from "react";
-import { useMemo } from 'react'
+import { useMemo, useState } from 'react'
 import styles from "./burger-ingredients.module.css";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
-import { Ingredient } from "./ingredient";
+import { Ingredient } from "./ingredient"; 
 import { useDispatch, useSelector } from 'react-redux';
 import { useInView } from 'react-intersection-observer';
 import { closeIngredientDetailsModal, deletePopupIngredient, openIngredientDetailsModal, setPopupIngredient } from '../../services/actions/IngredientDetailsAction';
+import Modal from "../modal/modal";
+import IngredientDetails from "../ingredient-details/ingredient-details";
 
 
 export const BurgerIngredients = () => {
   const data = useSelector((state) => {
     return state.ingredients.data;
   });
-  const [current, setCurrent] = React.useState('buns');
+  const [current, setCurrent] = useState('buns');
   const { isPopupIngredientOpened } = useSelector(
     (state) => state.ingredientDetails
   );
@@ -22,7 +24,7 @@ export const BurgerIngredients = () => {
     return data.filter((item) => item.type === 'bun');
   }, [data]);
 
-  const handleOpenModalIngredient = (element) => {
+ const handleOpenModalIngredient = (element) => {
     dispatch(openIngredientDetailsModal());
     dispatch(setPopupIngredient(element));
   };

@@ -20,8 +20,6 @@ export const ForgotPassword = () => {
     setValue({ email: e.target.value });
   };
 
-
-
   const onSubmit = async (e) => {
     e.preventDefault();
     await dispatch(passwordRecoveryRequest(form.email));

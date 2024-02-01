@@ -6,7 +6,7 @@ import styles from "./modal.module.css";
 import PropTypes from "prop-types";
 
 const Modal = ({ children, onClose, title }) => {
-  
+    
   useEffect(() => {
     const closeWhenPressEscape = (e) => {
       if (e.code === "Escape") onClose();

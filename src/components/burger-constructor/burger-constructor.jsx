@@ -79,7 +79,7 @@ export const BurgerConstructor = () => {
 
   const handleOpenModal = useCallback(() => {
     dispatch(openOrderDetailsModal());
-    const allIngredients = [...orderedIngredients, bun._id];
+    const allIngredients = [...orderedIngredients, bun?._id];
 
     dispatch(postOrder(allIngredients));
   }, [dispatch, orderedIngredients, bun]);

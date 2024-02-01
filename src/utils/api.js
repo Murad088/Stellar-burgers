@@ -2,9 +2,13 @@ import { getCookie } from "./getCookie";
 
 export const URL = "https://norma.nomoreparties.space/api";
 
+export const WS_FEED_URL = "wss://norma.nomoreparties.space/orders/all";
+export const WS_PROFILE_URL = "wss://norma.nomoreparties.space/orders";
+
 export function getIngredients() {
   return fetch(`${URL}/ingredients`).then(checkResponse);
 }
+
 export const request = (path, options) => {
   return fetch(`${URL}${path}`, options).then(checkResponse);
 };
@@ -54,6 +58,7 @@ export const fetchOrderData = (ingredients) => {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      Authorization: localStorage.getItem("accessToken"),
     },
     body: JSON.stringify({
       ingredients,
@@ -164,6 +169,16 @@ export const userDataRequest = async () => {
     referrerPolicy: "no-referrer",
   });
 };
+
+export const fetchOrderDataByNumber = (number) => {
+  return fetch(`${URL}/orders/${number}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  }).then(checkResponse);
+};
+
 
 export const updateDataRequest = async (form) => {
   return await fetch(`${URL}/auth/user`, {
