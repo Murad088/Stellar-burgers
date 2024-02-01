@@ -16,10 +16,6 @@ export const Feed = () => {
     };
   }, [dispatch, token]);
 
-  window.addEventListener('beforeunload', () => {
-    dispatch({ type: WS_CONNECTION_CLOSED });
-   });
-  
   const orders = useSelector(store => store.wsReducer.orders);
   const total = useSelector(store => store.wsReducer.total);
   const totalToday = useSelector(store => store.wsReducer.totalToday);

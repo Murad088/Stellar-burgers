@@ -1,3 +1,5 @@
+import { WS_CONNECTION_CLOSED, WS_PROFILE_CONNECTION_CLOSED } from "../actions/WebsocketActions";
+
 export const socketMiddleware = (Url, Actions) => {
   return (store) => {
     let socket = null;
@@ -28,8 +30,20 @@ export const socketMiddleware = (Url, Actions) => {
         socket.onclose = (event) => {
           dispatch({ type: onClose, payload: event });
         };
-      }
 
+        if (type === WS_PROFILE_CONNECTION_CLOSED) {
+          socket.close(1000, "Нормальное закрытие без ошибок.");
+          console.log("Привет, я тут отключаюсь от profile"); 
+          socket = null;
+        };
+  
+        if (type === WS_CONNECTION_CLOSED) {
+          socket.close(1000, "Нормальное закрытие без ошибок.");          
+          console.log("Привет, я тут отключаюсь от основы"); 
+          socket = null;
+        };
+      }
+    
       next(action);
     };
   };

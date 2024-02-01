@@ -27,11 +27,7 @@ export const OrderPage = () => {
     };
   }, [dispatch, token]);
 
-  window.addEventListener('beforeunload', () => {
-    dispatch({ type: WS_PROFILE_CONNECTION_CLOSED });
-   });
   
-
   const reversed = usersOrders?.reverse();
   return (
     <div>
