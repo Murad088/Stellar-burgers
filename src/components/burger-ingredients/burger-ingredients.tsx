@@ -8,6 +8,7 @@ import { useInView } from 'react-intersection-observer';
 import { closeIngredientDetailsModal, deletePopupIngredient, openIngredientDetailsModal, setPopupIngredient } from '../../services/actions/IngredientDetailsAction';
 import Modal from "../modal/modal";
 import IngredientDetails from "../ingredient-details/ingredient-details";
+import { TIngredient } from "../../utils/types";
 
 
 export const BurgerIngredients = () => {
@@ -24,7 +25,7 @@ export const BurgerIngredients = () => {
     return data.filter((item) => item.type === 'bun');
   }, [data]);
 
- const handleOpenModalIngredient = (element: any) => {
+ const handleOpenModalIngredient = (element: TIngredient) => {
     dispatch(openIngredientDetailsModal());
     dispatch(setPopupIngredient(element));
   };

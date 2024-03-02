@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { useAppSelector } from "../../utils/hooks";
 import { useLocation, Navigate } from "react-router-dom";
 import { FC, ReactElement, useEffect, useState } from "react";

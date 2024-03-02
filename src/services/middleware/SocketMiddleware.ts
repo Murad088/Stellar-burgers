@@ -33,7 +33,7 @@ export const socketMiddleware = (
           dispatch({ type: onMessage, payload: restParsedData });
         };
 
-        socket.onclose = (event: any) => {
+        socket.onclose = (event: string) => {
           dispatch({ type: onClose, payload: event });
         };
 

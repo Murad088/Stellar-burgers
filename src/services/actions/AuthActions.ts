@@ -213,7 +213,7 @@ export const checkUserAuth = () => {
         headers: {
           "content-type": "application/json",
           authorization: localStorage.getItem("accessToken"),
-        }
+        },
       })
       .then(result => {        
         return result.json().then((data: any) => {

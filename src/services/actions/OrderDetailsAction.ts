@@ -18,7 +18,7 @@ export type TOrderData = {
     number: number;
   };
   orders: any;
-};
+}
 
 type TGetOrderRequestAction = {
   type: typeof POST_ORDER_REQUEST;

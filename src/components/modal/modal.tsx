@@ -3,7 +3,6 @@ import { FC, PropsWithChildren, useEffect } from "react";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import ModalOverlay from "../modal-overlay/modal-overlay";
 import styles from "./modal.module.css";
-import PropTypes from "prop-types";
 
 type TModalProps = {
   onClose: () => void;
@@ -37,7 +36,3 @@ const Modal: FC<PropsWithChildren<TModalProps>> = ({ children, onClose, title })
 };
 
 export default Modal;
-
-Modal.propTypes = {
-  onClose: PropTypes.func.isRequired,
-};

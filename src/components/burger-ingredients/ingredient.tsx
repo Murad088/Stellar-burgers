@@ -42,7 +42,7 @@ export const Ingredient = ({ element }: {element: TIngredient }) => {
       return (
         ingredients.filter(
           (orderIngredient) => orderIngredient._id === element._id
-        ).length || 0
+        )?.length || 0
       );
     }
   }, [ingredients, bun, orderType, element]);

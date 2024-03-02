@@ -33,7 +33,7 @@ export const BurgerConstructor = () => {
   type TPriceState = {
     count: number;
     ids: any;
-  };
+  }
 
   interface IAction {
     type: 'change';
@@ -52,7 +52,7 @@ export const BurgerConstructor = () => {
           .reduce((prev, current) => {
             return prev + current;
           }, 0);
-        const bunsPrice = bun ? bun?.price * 2 : 0;
+        const bunsPrice = bun ? bun?.price / 2 : 0;
         const total = ingredientPrice + bunsPrice;
         const IDs = [bun?._id, ...ingredients.map((item) => item._id)];
         return { count: total, ids: IDs };
